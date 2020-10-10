@@ -137,6 +137,15 @@ class Router extends Component {
     handleChangeMode = (e) => {
         // 設定模式 ("off" or "unlock" or "lock")
         this.setState({ mode: e.target.value });
+        let data = {'mode': this.state.mode}
+        fetch('/change_mode', {
+            body: JSON.stringify(data),
+            headers:{
+                'content-type': 'application/json'
+            },
+            method: 'POST'
+        })
+        .then(res => res.json())
     }
 
     handleChangeMonitor = () => {
@@ -146,6 +155,8 @@ class Router extends Component {
 
     handleClickOpenDoor = () => {
         // 遠端開門
+        fetch('/open_door')
+        .then(res=>res.json())
     }
     render() {
         const { classes } = this.props;
@@ -181,7 +192,7 @@ class Router extends Component {
                         </div>)
                     case 1:
                         return (<Card className={classes.appCard}>
-                            <img src={this.state.liveTvStatus ? "" : "https://converus.com/english/wp-content/uploads/2016/10/Blue-Eye-Picture-RGB-new-crosshairs-400px-cropped-low-res-300x205.jpg"} className={classes.monitor} />
+                            <img src={this.state.liveTvStatus ? "/get_img" : "https://converus.com/english/wp-content/uploads/2016/10/Blue-Eye-Picture-RGB-new-crosshairs-400px-cropped-low-res-300x205.jpg"} className={classes.monitor} />
                             <IOSSwitch
                                 label="開啟監控功能"
                                 checked={this.state.liveTvStatus}
