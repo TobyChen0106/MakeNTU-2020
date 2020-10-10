@@ -137,7 +137,7 @@ class Router extends Component {
     handleChangeMode = (e) => {
         // 設定模式 ("off" or "unlock" or "lock")
         this.setState({ mode: e.target.value });
-        let data = {'mode': this.state.mode}
+        let data = {'mode': e.target.value}
         fetch('/change_mode', {
             body: JSON.stringify(data),
             headers:{
